@@ -120,20 +120,7 @@ fi
 # Change shell prompt to a simple one
 export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\w\[\033[00m\]\$ "
 
-##
-# sources fzf keybindings and tab completions
-source /usr/share/doc/fzf/examples/key-bindings.bash
-source /usr/share/bash-completion/completions/fzf
 
-# Edit fzf keybinds and full preview
-bind -m vi-command '"\C-f": "\C-z\ec\C-z"'
-bind -m vi-insert '"\C-f": "\C-z\ec\C-z"'
-# Generate the list as the input for fzf
-export FZF_ALT_C_COMMAND="find -L $HOME -type d -name '.git' -prune -o \
-    -name 'node_modules' -prune -o \
-    -type d -print"
-export FZF_DEFAULT_OPTS='--no-height --no-reverse'
-##
 
 # Lazy load nvm
 nvm() {
@@ -179,7 +166,9 @@ source ~/.bash_completion/git-completion.bash
 source ~/.bash_completion/alacritty
 source ~/.bash_completion/tmux-completion
 
-
+# sources fzf keybindings and tab completions
+source /usr/share/doc/fzf/examples/key-bindings.bash
+source /usr/share/bash-completion/completions/fzf
 
 
 # Database password
@@ -201,5 +190,6 @@ function vim() {
 EDITOR="NVIM_APPNAME='stdvim' nvim"
 export EDITOR
 
-## tmux config source 
+## Scripts
 source ~/.scripts/tmux-script.sh
+source ~/.scripts/fzf-script.sh
