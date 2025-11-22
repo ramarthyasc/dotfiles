@@ -180,9 +180,6 @@ source ~/.bash_completion/alacritty
 source ~/.bash_completion/tmux-completion
 
 
-# Default editor set :
-EDITOR=vim
-export EDITOR
 
 
 # Database password
@@ -196,4 +193,10 @@ record() {
 # Vim mode for bash
 set -o vi
 
-alias vim="NVIM_APPNAME=stdvim nvim"
+function vim() {
+    NVIM_APPNAME="stdvim" nvim "$@"
+}
+
+# Default editor set :
+EDITOR=vim
+export EDITOR
