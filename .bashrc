@@ -198,5 +198,8 @@ function vim() {
 }
 
 # Default editor set :
-EDITOR=vim
+EDITOR="NVIM_APPNAME='stdvim' nvim"
 export EDITOR
+
+## tmux config source 
+source ~/.scripts/tmux-script.sh
