@@ -32,19 +32,23 @@ function bind_command() {
         -type d -print | fzf)
     # This is run by bash. And bash shell ask tmux to do things (even when this
     # code is executed inside a tmux environment, there too, bash is running it.)
-    tmux new-session -d -s "${selected_dir##*/}" -c "${selected_dir}" 2>/dev/null
-    tmux attach-session -t "${selected_dir##*/}"
+    if [[ -n $selected_dir ]]; then
+        tmux new-session -d -s "${selected_dir##*/}" -c "${selected_dir}" 2>/dev/null
+        tmux attach-session -t "${selected_dir##*/}"
+    fi
 }
 
-function bind_command_tmux_s() {
+function BIND_COMMAND_TMUX_S() {
     selected_dir=$(find -L $HOME -type d -name '.*' -prune -o \
         -name 'node_modules' -prune -o \
         -type d -print | fzf)
 
     ## If i want to create new-session, then i have to create a detached session (using -d flag),
     ## then attach the client to that session (using 'switch-client' command).
-    tmux new-session -d -s "${selected_dir##*/}" -c "${selected_dir}" 2>/dev/null
-    tmux switch-client -t "${selected_dir##*/}"
+    if [[ -n $selected_dir ]]; then
+        tmux new-session -d -s "${selected_dir##*/}" -c "${selected_dir}" 2>/dev/null
+        tmux switch-client -t "${selected_dir##*/}"
+    fi
     ## Note:  run-shell or anything else (Setting TMUX="" temporarily,etc..)  doesn't act like the
     ## instructions given in the .tmux.conf (which the tmux server internally executes).
     ## if the instruction to create new-session (using bind-key) is given inside .tmux.conf, then
@@ -52,22 +56,30 @@ function bind_command_tmux_s() {
     ## without worrying about creating nested session.
     #
     }
-function bind_command_tmux_w() {
+function BIND_COMMAND_TMUX_W() {
     selected_dir=$(find -L $HOME -type d -name '.*' -prune -o \
         -name 'node_modules' -prune -o \
         -type d -print | fzf)
+    if [[ -n $selected_dir ]]; then
+        tmux new-window -n "${selected_dir##*/}" -c "${selected_dir}"
+    fi
 
-    tmux new-window -n "${selected_dir##*/}" -c "${selected_dir}"
 }
 
 #Open that GENERIC directory in tmux
 if [[ -n "$TMUX" ]]; then
     # new window
-    bind -x '"\C-ff": bind_command_tmux_w'
+    bind -x '"\C-ff": BIND_COMMAND_TMUX_W'
     # new session
-    bind -x '"\C-fs": bind_command_tmux_s'
+    bind -x '"\C-fs": BIND_COMMAND_TMUX_S'
 else
     # new tmux session created from the Terminal
     bind -x '"\C-f": bind_command'
 fi
+
+## This function definition will be inherited by all the child processes 
+## (Even the tmux server) which are initialized from the parent process 
+## having these declared functions. 
+export -f BIND_COMMAND_TMUX_S
+export -f BIND_COMMAND_TMUX_W
 

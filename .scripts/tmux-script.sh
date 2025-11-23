@@ -6,7 +6,13 @@
 ### 0. You should have fzf & tmux installed previously.
 
 ### 1. Create ~/.scripts directory
-### 2. Copy tmux-script.sh & fzf-script.sh to ~/.scripts directory
+### 2. Copy tmux-script.sh, fzf-script.sh to ~/.scripts directory
+    ### 2.1 OPTIONAL (for nvim integration): Copy nvimfzf-script.sh also to ~/.scripts directory
+    ### : Copy this script into your nvim keymaps
+    # if vim.env.TMUX ~= nil and vim.env.TMUX ~= "" then
+    #     vim.keymap.set("n", "<C-f>f", "<cmd>silent !tmux neww ~/.scripts/nvimfzf-script.sh 'w'<CR>")
+    #     vim.keymap.set("n", "<C-f>s", "<cmd>silent !tmux neww ~/.scripts/nvimfzf-script.sh 's'<CR>")
+    # end
 
 ### 3. Put these instructions in ~/.tmux.conf :
 #set-option -g prefix 'C-@'
@@ -25,7 +31,7 @@
 ### each directory
 #### 5.1 Open tmux-script.sh & specify your high frequency directory locations.
 
-    # #HIGH FREQUENCY DIRECTORIES : CHANGE THESE WHEN NEEDED
+    # #HIGH FREQUENCY DIRECTORIES : CHANGE THESE
     # If your high frequency directories are inside HOME directory : 
     # HIGH_FREQ_DIR0="$HOME/edit-path-to-high-freq-directory0"
     # HIGH_FREQ_DIR1="$HOME/edit-path-to-high-freq-directory1"

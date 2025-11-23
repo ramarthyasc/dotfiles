@@ -18,7 +18,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 
 --greatest remap ?
-vim.keymap.set("x", "<leader>p", "\"_dp")
+vim.keymap.set("x", "<leader>p", "\"_dP")
 
 --next greatest remap ?
 vim.keymap.set("n", "<leader>y", "\"+y")
@@ -32,8 +32,13 @@ vim.keymap.set("v", "<leader>d", "\"_d")
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
+
 -- MAKE CUSTOM SCRIPT FOR ME - TMUX-NVIM-FZF linker
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+if vim.env.TMUX ~= nil and vim.env.TMUX ~= "" then
+    vim.keymap.set("n", "<C-f>f", "<cmd>silent !tmux neww ~/.scripts/nvimfzf-script.sh 'w'<CR>")
+    vim.keymap.set("n", "<C-f>s", "<cmd>silent !tmux neww ~/.scripts/nvimfzf-script.sh 's'<CR>")
+end
+
 vim.keymap.set("n", "<leader>f", function()
     vim.lsp.buf.format()
 end)
@@ -44,7 +49,7 @@ vim.keymap.set("n", "<leader>l", ":lnext<CR>zz")
 vim.keymap.set("n", "<leader>h", ":lprev<CR>zz")
 
 vim.keymap.set("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", {silent = true})
+vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 
 
