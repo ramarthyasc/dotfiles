@@ -18,7 +18,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 
 --greatest remap ?
-vim.keymap.set("x", "<leader>p", "\"_dP")
+vim.keymap.set("x", "<leader>p", "\"_dp")
 
 --next greatest remap ?
 vim.keymap.set("n", "<leader>y", "\"+y")
