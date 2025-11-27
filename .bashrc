@@ -182,13 +182,10 @@ record() {
 # Vim mode for bash
 set -o vi
 
-function vim() {
-    NVIM_APPNAME="stdvim" nvim "$@"
-}
+## I create an executable vim in /usr/local/bin - which inherits the variable NVIM_APPNAME=stdvim config
 
 # Default editor set :
-EDITOR="NVIM_APPNAME='stdvim' nvim"
-export EDITOR
+export EDITOR=vim
 
 ## Scripts
 source ~/.scripts/tmux-script.sh

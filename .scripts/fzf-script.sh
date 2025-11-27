@@ -1,27 +1,28 @@
-#### USAGE
+#### USAGE (Another point of view of how to use 'superflow')
 
 ##########
-
 #### TMUX - BASH LINKAGE
 
 ## C-space (ie; Prefix key - for both terminal & tmux) + h/j/k/l = 
 ## Open 'high frequency' directories in tmux in 
 ## new respective sessions. If a session is already present, then the client 'attaches' to that session 
-## (if commanded from bash shell) or 'switches' to that session (if commanded from tmux shell).
+## (if pressed from bash shell) or 'switches' to that session (if pressed from tmux shell).
 
 #### FZF - TMUX - BASH LINKAGE
 
 ## If from bash terminal : 
+
 ## C-f = 
 ## Fzf opens, and the directory selected will be opened inside a new tmux session if not already created. If already created,
 ## then the client attaches to that session.
+
 ## If from Tmux session : 
+
 ## C-f + s = 
 ## Fzf shows up, and the directory selected will be opened inside a new tmux session if not already created. If already created,
 ## then the client attaches to that session.
 ## C-f + f = 
 ## Fzf shows up, and the selected directory will be opened inside a new window of the current session.
-
 ##########
 
 export FZF_DEFAULT_OPTS='--no-height --no-reverse'

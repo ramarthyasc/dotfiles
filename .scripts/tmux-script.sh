@@ -1,52 +1,6 @@
 #!/usr/bin/env bash
 
-#### INSTALLATION
-
-##########
-### 0. You should have fzf & tmux installed previously.
-
-### 1. Create ~/.scripts directory
-### 2. Copy tmux-script.sh, fzf-script.sh to ~/.scripts directory
-    ### 2.1 OPTIONAL (for nvim integration): Copy nvimfzf-script.sh also to ~/.scripts directory
-    ### : Copy this script into your nvim keymaps
-    # if vim.env.TMUX ~= nil and vim.env.TMUX ~= "" then
-    #     vim.keymap.set("n", "<C-f>f", "<cmd>silent !tmux neww ~/.scripts/nvimfzf-script.sh 'w'<CR>")
-    #     vim.keymap.set("n", "<C-f>s", "<cmd>silent !tmux neww ~/.scripts/nvimfzf-script.sh 's'<CR>")
-    # end
-
-### 3. Put these instructions in ~/.tmux.conf :
-#set-option -g prefix 'C-@'
-## High frequency directories
-#bind-key h run-shell "bash ~/.scripts/tmux-script.sh 'h'"
-#bind-key j run-shell "bash ~/.scripts/tmux-script.sh 'j'"
-#bind-key k run-shell "bash ~/.scripts/tmux-script.sh 'k'"
-#bind-key l run-shell "bash ~/.scripts/tmux-script.sh 'l'"
-
-### 4. Put these instructions in ~/.bashrc (for bash users)
-## Scripts
-#source ~/.scripts/tmux-script.sh
-#source ~/.scripts/fzf-script.sh
-
-### 5. Specify the High frequency directories & custom session names for
-### each directory
-#### 5.1 Open tmux-script.sh & specify your high frequency directory locations.
-
-    # #HIGH FREQUENCY DIRECTORIES : CHANGE THESE
-    # If your high frequency directories are inside HOME directory : 
-    # HIGH_FREQ_DIR0="$HOME/edit-path-to-high-freq-directory0"
-    # HIGH_FREQ_DIR1="$HOME/edit-path-to-high-freq-directory1"
-    # HIGH_FREQ_DIR2="$HOME/edit-path-to-high-freq-directory2"
-    # HIGH_FREQ_DIR3="$HOME/edit-path-to-high-freq-directory3"
-    #
-    # HIGH_FREQ_DIR0_NAME="edit_here"
-    # HIGH_FREQ_DIR1_NAME="edit_here"
-    # HIGH_FREQ_DIR2_NAME="edit_here"
-    # HIGH_FREQ_DIR3_NAME="edit_here"
-
-### That's it ! Enjoy !!
-##########
-
-#### USAGE
+#### USAGE (Another point of view of how to use 'superflow')
 
 ##########
 #### TMUX - BASH LINKAGE
@@ -54,15 +8,18 @@
 ## C-space (ie; Prefix key - for both terminal & tmux) + h/j/k/l = 
 ## Open 'high frequency' directories in tmux in 
 ## new respective sessions. If a session is already present, then the client 'attaches' to that session 
-## (if commanded from bash shell) or 'switches' to that session (if commanded from tmux shell).
+## (if pressed from bash shell) or 'switches' to that session (if pressed from tmux shell).
 
 #### FZF - TMUX - BASH LINKAGE
 
 ## If from bash terminal : 
+
 ## C-f = 
 ## Fzf opens, and the directory selected will be opened inside a new tmux session if not already created. If already created,
 ## then the client attaches to that session.
+
 ## If from Tmux session : 
+
 ## C-f + s = 
 ## Fzf shows up, and the directory selected will be opened inside a new tmux session if not already created. If already created,
 ## then the client attaches to that session.
@@ -71,13 +28,7 @@
 ##########
 
 #bind is a readline command (only runs while in insert mode & we only need that property)
-
-# THESE Bindings won't won't inside tmux because C-@ ie; C-space is attached as the 
-# prefix of tmux. So tmux will only realize C-@ ie; C-space as it's prefix, and only execute
-# it's binding after C-@ ie; C-space. So we need the same bindings in .tmux.conf too.
-#
-#If sourced from .bashrc - to use in terminal, do bind -x, otherwise when bind called
-#from tmux, use tmux commands
+# Note: C-@ given for bash will be overridden by the C-@ of tmux while iam in tmux. So create bind commands in .tmux.conf too
 
 #HIGH FREQUENCY DIRECTORIES : CHANGE THESE WHEN NEEDED
 HIGH_FREQ_DIR0="$HOME/Web_Dev/leetcode_project/"

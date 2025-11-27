@@ -7,6 +7,8 @@ vim.keymap.set("n", "<leader>w", function()
 end
 )
 
+vim.keymap.set("i", "<C-l>", "<Right>")
+
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
@@ -32,8 +34,10 @@ vim.keymap.set("v", "<leader>d", "\"_d")
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
+vim.keymap.set("n", "<C-f>", "<nop>")
+vim.keymap.set("n", "<leader>p", "<nop>")
 
--- MAKE CUSTOM SCRIPT FOR ME - TMUX-NVIM-FZF linker
+-- -- MAKE CUSTOM SCRIPT FOR ME - TMUX-NVIM-FZF linker
 if vim.env.TMUX ~= nil and vim.env.TMUX ~= "" then
     vim.keymap.set("n", "<C-f>f", "<cmd>silent !tmux neww ~/.scripts/nvimfzf-script.sh 'w'<CR>")
     vim.keymap.set("n", "<C-f>s", "<cmd>silent !tmux neww ~/.scripts/nvimfzf-script.sh 's'<CR>")
