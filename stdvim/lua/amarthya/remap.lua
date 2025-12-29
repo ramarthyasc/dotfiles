@@ -7,6 +7,15 @@ vim.keymap.set("n", "<leader>w", function()
 end
 )
 
+vim.keymap.set("n", "<leader>\\", function()
+    if vim.o.background == "dark" then
+        vim.o.background = "light"
+    elseif vim.o.background == "light" then
+            vim.o.background = "dark"
+        end
+    end
+    )
+
 vim.keymap.set("i", "<C-l>", "<Right>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -43,19 +52,21 @@ if vim.env.TMUX ~= nil and vim.env.TMUX ~= "" then
     vim.keymap.set("n", "<C-f>s", "<cmd>silent !tmux neww ~/.scripts/nvimfzf-script.sh 's'<CR>")
 end
 
-vim.keymap.set("n", "<leader>f", function()
+vim.keymap.set("n", "<leader>ff", function()
     vim.lsp.buf.format()
 end)
+vim.keymap.set("n", "<leader>;", function()
+    vim.diagnostic.setloclist()
+end
+)
 
-vim.keymap.set("n", "<leader>j", ":cnext<CR>zz")
-vim.keymap.set("n", "<leader>k", ":cprev<CR>zz")
-vim.keymap.set("n", "<leader>l", ":lnext<CR>zz")
-vim.keymap.set("n", "<leader>h", ":lprev<CR>zz")
+vim.keymap.set("n", "<C-j>", ":cnext<CR>zz")
+vim.keymap.set("n", "<C-k>", ":cprev<CR>zz")
+vim.keymap.set("n", "<C-l>", ":lnext<CR>zz")
+vim.keymap.set("n", "<C-h>", ":lprev<CR>zz")
 
 vim.keymap.set("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
-
-
 
 
 -- sdfs

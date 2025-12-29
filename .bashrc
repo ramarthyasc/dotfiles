@@ -122,30 +122,6 @@ export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\
 
 
 
-# Lazy load nvm
-nvm() {
-    unset -f nvm
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-    nvm "$@"
-}
-npm() {
-    unset -f npm
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-    npm "$@"
-}
-node() {
-    unset -f node
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-    node "$@"
-}
-##
-
 # Lazy load pyenv
 pyenv() {
     unset -f pyenv
@@ -171,7 +147,7 @@ source /usr/share/doc/fzf/examples/key-bindings.bash
 source /usr/share/bash-completion/completions/fzf
 
 
-# Database password
+# User env. variables
 . "$HOME/.user.env"
 
 # Recording function
@@ -190,3 +166,5 @@ export EDITOR=vim
 ## Scripts
 source ~/.scripts/tmux-script.sh
 source ~/.scripts/fzf-script.sh
+
+source ~/.scripts/nvm-lazyload-script.sh

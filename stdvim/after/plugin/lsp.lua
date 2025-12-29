@@ -1,7 +1,14 @@
 -- Turn diagnostics on or off
 vim.diagnostic.config({
   virtual_text = true,
+  severity_sort = true
 })
+
+vim.keymap.set("n", "<leader>e",function ()
+    vim.diagnostic.open_float()
+end, {silent = true, noremap = true}
+)
+vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", {noremap = true, silent = true})
 
 --Configure & enable language servers using Nvim's std lsp.enable and lsp.config features
 --
