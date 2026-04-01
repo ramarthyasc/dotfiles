@@ -27,9 +27,9 @@ require("lazy").setup({
     spec = {
         -- add your plugins here
         {
-            'nvim-telescope/telescope.nvim',
-            tag = 'v0.1.9',
-            dependencies = { 'nvim-lua/plenary.nvim' }
+            "nvim-telescope/telescope.nvim",
+            tag = "v0.1.9",
+            dependencies = { "nvim-lua/plenary.nvim" },
         },
 
         { "sainnhe/gruvbox-material" },
@@ -40,49 +40,56 @@ require("lazy").setup({
                 -- your configuration comes here
                 -- or leave it empty to use the default settings
                 -- refer to the configuration section below
-            }
+            },
         },
         {
-            'nvim-lualine/lualine.nvim',
-            dependencies = { 'nvim-tree/nvim-web-devicons' }
+            "nvim-lualine/lualine.nvim",
+            dependencies = { "nvim-tree/nvim-web-devicons" },
         },
 
         {
             "nvim-treesitter/nvim-treesitter",
             lazy = false,
-            branch = 'master',
-            build = ':TSUpdate'
+            branch = "master",
+            build = ":TSUpdate",
         },
 
-        { 'nvim-treesitter/playground' },
-        { 'ThePrimeagen/harpoon' },
-        { 'mbbill/undotree' },
-        { 'tpope/vim-fugitive' },
+        { "nvim-treesitter/playground" },
+        { "ThePrimeagen/harpoon" },
+        { "mbbill/undotree" },
+        { "tpope/vim-fugitive" },
         -- For LSP config (for every LSPs)
-        { 'neovim/nvim-lspconfig' },
+        { "neovim/nvim-lspconfig" },
         -- For making the installation of LSP, DAP, Linter, Formatter -easy = Mason
         {
-            'mason-org/mason.nvim',
-            opts = {}
+            "mason-org/mason.nvim",
+            opts = {},
         },
         -- To enable all installed LSPs (Not DAPS or others)
         {
-            'mason-org/mason-lspconfig.nvim',
-            opts = {}
+            "mason-org/mason-lspconfig.nvim",
+            opts = {},
         },
         -- To ensure installing mason tools including LSPs & other than LSPs when starting from scratch or opening nvim
         {
-            'WhoIsSethDaniel/mason-tool-installer.nvim',
+            "WhoIsSethDaniel/mason-tool-installer.nvim",
             opts = {
                 ensure_installed = {
+                    -- LSP
                     "lua_ls",
                     "vtsls",
                     "bashls",
                     "tailwindcss",
-                    "yamlls"
-                }
-            }
+                    "yamlls",
+                    "emmet-language-server",
+                },
+            },
         },
+        -- {
+        --     "pmizio/typescript-tools.nvim",
+        --     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+        --     opts = {},
+        -- },
         -- For the nvim to communicate with the Installed DAPs or Installed Linters or Formatters (CLIs),
         -- we need a mediator. For DAP, that is  'nvim-dap'. For Linters, that is 'nvim-lint', For Formatters,
         -- that is 'conform.nvim'.
@@ -94,15 +101,18 @@ require("lazy").setup({
             config = true,
             opts = {
                 map_c_h = true,
-            }
+            },
         },
         {
-            'saghen/blink.cmp',
+            "saghen/blink.cmp",
             -- optional: provides snippets for the snippet source
-            dependencies = { 'rafamadriz/friendly-snippets' },
+            dependencies = {
+                "rafamadriz/friendly-snippets",
+                dependencies = { "L3MON4D3/LuaSnip", version = "v2.*" },
+            },
 
             -- use a release tag to download pre-built binaries
-            version = '1.*',
+            version = "1.*",
             -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
             -- build = 'cargo build --release',
             -- If you use nix, you can build from source using latest nightly rust with:
@@ -123,21 +133,33 @@ require("lazy").setup({
                 -- C-k: Toggle signature help (if signature.enabled = true)
                 --
                 -- See :h blink-cmp-config-keymap for defining your own keymap
-                keymap = { preset = 'default' },
+                keymap = { preset = "default" },
 
                 appearance = {
                     -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
                     -- Adjusts spacing to ensure icons are aligned
-                    nerd_font_variant = 'mono'
+                    nerd_font_variant = "mono",
                 },
 
                 -- (Default) Only show the documentation popup when manually triggered
-                completion = { documentation = { auto_show = false } },
-
+                completion = {
+                    documentation = { auto_show = false },
+                    menu = {
+                        draw = {
+                            columns = {
+                                { "kind_icon" },
+                                { "label",    "label_description", gap = 1 },
+                            },
+                        },
+                    },
+                    ghost_text = { enabled = true },
+                },
+                signature = { enabled = true },
+                snippets = { preset = "luasnip" },
                 -- Default list of enabled providers defined so that you can extend it
                 -- elsewhere in your config, without redefining it, due to `opts_extend`
                 sources = {
-                    default = { 'lsp', 'path', 'snippets', 'buffer' },
+                    default = { "lsp", "path", "snippets", "buffer" },
                 },
 
                 -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
@@ -145,15 +167,9 @@ require("lazy").setup({
                 -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
                 --
                 -- See the fuzzy documentation for more information
-                fuzzy = { implementation = "prefer_rust_with_warning" }
+                fuzzy = { implementation = "prefer_rust_with_warning" },
             },
-            opts_extend = { "sources.default" }
-        },
-        {
-            'razak17/tailwind-fold.nvim',
-            opts = {},
-            dependencies = { 'nvim-treesitter/nvim-treesitter' },
-            ft = { 'html', 'svelte', 'astro', 'vue', 'typescriptreact', 'javascriptreact', 'php', 'blade' },
+            opts_extend = { "sources.default" },
         },
         {
             "catgoose/nvim-colorizer.lua",
@@ -162,8 +178,48 @@ require("lazy").setup({
             },
         },
         {
-            "nvim-treesitter/nvim-treesitter-context"
+            "nvim-treesitter/nvim-treesitter-context",
         },
+        {
+            {
+                "folke/snacks.nvim",
+                opts = function()
+                    -- Toggle the profiler
+                    Snacks.toggle.profiler():map("<leader>pp")
+                    -- Toggle the profiler highlights
+                    Snacks.toggle.profiler_highlights():map("<leader>po")
+                end,
+                keys = {
+                    {
+                        "<leader>pi",
+                        function()
+                            Snacks.profiler.scratch()
+                        end,
+                        desc = "Profiler Scratch Bufer",
+                    },
+                },
+            },
+        },
+        {
+            "stevearc/oil.nvim",
+            ---@module 'oil'
+            ---@type oil.SetupOpts
+            opts = {},
+            -- Optional dependencies
+            dependencies = { { "nvim-mini/mini.icons", opts = {} } },
+            -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+            -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+            lazy = false,
+        },
+        {
+            "mfussenegger/nvim-dap",
+            dependencies = {
+                "rcarriga/nvim-dap-ui",
+                "nvim-neotest/nvim-nio",
+                "jay-babu/mason-nvim-dap.nvim",
+            }
+        },
+
     },
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.

@@ -3,4 +3,4 @@
 require("amarthya.lazy")
 require("amarthya.remap")
 require("amarthya.set")
-require("amarthya.completion")
+

@@ -65,9 +65,12 @@ vim.keymap.set("n", "<C-k>", ":cprev<CR>zz")
 vim.keymap.set("n", "<C-l>", ":lnext<CR>zz")
 vim.keymap.set("n", "<C-h>", ":lprev<CR>zz")
 
+vim.keymap.set("n", "<C-q>", ":cclose<CR>")
+
 vim.keymap.set("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
+vim.keymap.set("i", "<C-n>", "<C-x><C-o>");
 
 -- sdfs
 

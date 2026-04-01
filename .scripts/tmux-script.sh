@@ -31,8 +31,8 @@
 # Note: C-@ given for bash will be overridden by the C-@ of tmux while iam in tmux. So create bind commands in .tmux.conf too
 
 #HIGH FREQUENCY DIRECTORIES : CHANGE THESE WHEN NEEDED
-HIGH_FREQ_DIR0="$HOME/Web_Dev/leetcode_project/"
-HIGH_FREQ_DIR1="$HOME/Web_Dev/open-source/n8n/"
+HIGH_FREQ_DIR0="$HOME/Web_Dev/carkill/"
+HIGH_FREQ_DIR1="$HOME/Web_Dev/jobwinner/"
 HIGH_FREQ_DIR2="$HOME/Web_Dev/open-source/"
 HIGH_FREQ_DIR3="$HOME/Programming/"
 

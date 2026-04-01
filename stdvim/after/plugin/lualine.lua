@@ -1,3 +1,5 @@
+local Snacks = require("snacks")
+
 require("lualine").setup {
     options = {
         theme = "auto",
@@ -9,6 +11,10 @@ require("lualine").setup {
                 'filename',
                 path = 1,
             }
+        },
+        lualine_x = {
+            Snacks.profiler.status(),
         }
     },
+
 }
