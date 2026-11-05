@@ -34,6 +34,7 @@ require("lazy").setup({
         { "<leader>pf", "<cmd>Telescope find_files<cr>",  desc = "Telescope find files" },
         { "<leader>pg", "<cmd>Telescope git_files<cr>",   desc = "Telescope git files" },
         { "<leader>fs", "<cmd>Telescope grep_string<cr>", desc = "Telescope grep string" },
+
         { "<leader>ps", "<cmd>Telescope live_grep<cr>",   desc = "Telescope live grep" },
         { "<leader>ph", "<cmd>Telescope help_tags<cr>",   desc = "Telescope help" },
       },
@@ -41,6 +42,16 @@ require("lazy").setup({
         local actions = require("telescope.actions")
         require("telescope").setup({
           defaults = { mappings = { i = { ["<esc>"] = actions.close } } },
+          pickers = {
+            find_files = {
+              hidden = true,
+              no_ignore = false,
+              find_command = { "rg", "--files", "--hidden", "-g", "!.git" },
+            },
+            git_files = {
+              show_untracked = true,
+            },
+          },
         })
       end,
     },
@@ -318,7 +329,15 @@ require("lazy").setup({
           hijack_netrw = true,
           respect_buf_cwd = true,
           sync_root_with_cwd = true,
-
+          renderer = {
+            highlight_git = "all",
+            icons = {
+              show = {
+                git = true,
+              },
+              git_placement = "signcolumn",
+            },
+          },
           update_focused_file = {
             enable = true,
             update_root = false,

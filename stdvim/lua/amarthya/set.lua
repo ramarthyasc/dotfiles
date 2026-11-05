@@ -1,5 +1,5 @@
 vim.opt.termguicolors = true
-vim.opt.guicursor = ""
+vim.opt.guicursor = "n-v:block-blinkwait700-blinkon500-blinkoff500"
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
@@ -20,7 +20,7 @@ vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
@@ -34,20 +34,8 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 
 vim.g.mapleader = " "
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.keymap.set("n", "<leader>nh", "<cmd>nohlsearch<CR>", {
+  desc = "Clear search highlighting",
+})
