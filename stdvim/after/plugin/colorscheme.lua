@@ -19,3 +19,9 @@ vim.cmd.colorscheme('gruvbox-material')
 --
 -- vim.cmd.colorscheme("dayfox")
 
+vim.api.nvim_set_hl(0, "NvimTreeNormal", { link = "Normal" })
+vim.api.nvim_set_hl(0, "NvimTreeNormalNC", { link = "Normal" })
+vim.api.nvim_set_hl(0, "NvimTreeNormalFloat", { link = "Normal" })
+vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
+vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#000000", bg = "NONE" })
+vim.api.nvim_set_hl(0, "NvimTreeEndOfBuffer", { link = "NvimTreeNormal" })

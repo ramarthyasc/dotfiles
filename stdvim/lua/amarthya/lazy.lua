@@ -32,7 +32,7 @@ require("lazy").setup({
       dependencies = { "nvim-lua/plenary.nvim" },
       keys = {
         { "<leader>pf", "<cmd>Telescope find_files<cr>",  desc = "Telescope find files" },
-        { "<leader>pg",      "<cmd>Telescope git_files<cr>",   desc = "Telescope git files" },
+        { "<leader>pg", "<cmd>Telescope git_files<cr>",   desc = "Telescope git files" },
         { "<leader>fs", "<cmd>Telescope grep_string<cr>", desc = "Telescope grep string" },
         { "<leader>ps", "<cmd>Telescope live_grep<cr>",   desc = "Telescope live grep" },
         { "<leader>ph", "<cmd>Telescope help_tags<cr>",   desc = "Telescope help" },
@@ -295,6 +295,68 @@ require("lazy").setup({
         vim.keymap.set("n", "goo", function()
           return require("opencode").operator("@this") .. "_"
         end, { expr = true, desc = "Send line to OpenCode" })
+      end,
+    },
+    {
+      "nvim-tree/nvim-tree.lua",
+      version = "*",
+      lazy = false,
+      dependencies = {
+        "nvim-tree/nvim-web-devicons",
+      },
+      config = function()
+        vim.g.loaded_netrw = 1
+        vim.g.loaded_netrwPlugin = 1
+        vim.opt.termguicolors = true
+
+        local height_ratio = 0.8
+        local width_ratio = 0.5
+        local api = require("nvim-tree.api")
+
+        require("nvim-tree").setup({
+          disable_netrw = true,
+          hijack_netrw = true,
+          respect_buf_cwd = true,
+          sync_root_with_cwd = true,
+
+          update_focused_file = {
+            enable = true,
+            update_root = false,
+          },
+
+          view = {
+            relativenumber = true,
+            float = {
+              enable = true,
+              open_win_config = function()
+                local screen_w = vim.o.columns
+                local screen_h = vim.o.lines - vim.o.cmdheight
+                local width = math.floor(screen_w * width_ratio)
+                local height = math.floor(screen_h * height_ratio)
+
+                return {
+                  relative = "editor",
+                  border = "rounded",
+                  row = math.floor((screen_h - height) / 2),
+                  col = math.floor((screen_w - width) / 2),
+                  width = width,
+                  height = height,
+                }
+              end,
+            },
+            width = function()
+              return math.floor(vim.o.columns * width_ratio)
+            end,
+          },
+        })
+        vim.keymap.set("n", "<leader>t", function()
+          if api.tree.is_visible() then
+            api.tree.close()
+          else
+            api.tree.open({ path = vim.fn.getcwd() })
+            api.tree.find_file({ open = false, focus = false })
+          end
+        end, { desc = "Toggle project tree" })
       end,
     },
 
