@@ -171,3 +171,7 @@ source ~/.scripts/tmux-script.sh
 source ~/.scripts/fzf-script.sh
 
 # source ~/.scripts/nvm-lazyload-script.sh
+export PATH="$PATH:$HOME/go/bin"
+
+# opencode
+export PATH=/home/r-amarthya-sreechand/.opencode/bin:$PATH
