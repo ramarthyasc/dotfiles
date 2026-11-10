@@ -30,6 +30,27 @@ require("lazy").setup({
 			"nvim-telescope/telescope.nvim",
 			tag = "v0.1.9",
 			dependencies = { "nvim-lua/plenary.nvim" },
+			keys = {
+				{ "<leader>pf", "<cmd>Telescope find_files<cr>", desc = "Telescope find files" },
+				{ "<leader>pg", "<cmd>Telescope git_files<cr>", desc = "Telescope git files" },
+				{ "<leader>fs", "<cmd>Telescope grep_string<cr>", desc = "Telescope grep string" },
+				{ "<leader>ps", "<cmd>Telescope live_grep<cr>", desc = "Telescope live grep" },
+				{ "<leader>ph", "<cmd>Telescope help_tags<cr>", desc = "Telescope help" },
+			},
+			config = function()
+				local actions = require("telescope.actions")
+				require("telescope").setup({
+					defaults = { mappings = { i = { ["<esc>"] = actions.close } } },
+					pickers = {
+						find_files = {
+							hidden = true,
+							no_ignore = false,
+							find_command = { "rg", "--files", "--hidden", "-g", "!.git" },
+						},
+						git_files = { show_untracked = true },
+					},
+				})
+			end,
 		},
 
 		{ "sainnhe/gruvbox-material" },
@@ -55,7 +76,26 @@ require("lazy").setup({
 		},
 
 		{ "nvim-treesitter/playground" },
-		{ "ThePrimeagen/harpoon" },
+		{
+			"ThePrimeagen/harpoon",
+			keys = {
+				{ "<leader>a", function() require("harpoon.mark").add_file() end, desc = "Harpoon add file" },
+				{ "<C-e>", function() require("harpoon.ui").toggle_quick_menu() end, desc = "Harpoon menu" },
+				{ "<leader>h", function() require("harpoon.ui").nav_file(1) end, desc = "Harpoon file 1" },
+				{ "<leader>j", function() require("harpoon.ui").nav_file(2) end, desc = "Harpoon file 2" },
+				{ "<leader>k", function() require("harpoon.ui").nav_file(3) end, desc = "Harpoon file 3" },
+				{ "<leader>l", function() require("harpoon.ui").nav_file(4) end, desc = "Harpoon file 4" },
+			},
+			config = function()
+				local ui = require("harpoon.ui")
+				vim.api.nvim_create_autocmd("FileType", {
+					pattern = "netrw",
+					callback = function(args)
+						vim.keymap.set("n", "<C-l>", function() ui.nav_file(4) end, { buffer = args.buf })
+					end,
+				})
+			end,
+		},
 		{ "mbbill/undotree" },
 		{ "tpope/vim-fugitive" },
 		-- For LSP config (for every LSPs)
@@ -90,10 +130,17 @@ require("lazy").setup({
 		},
 		{
 			"saghen/blink.cmp",
+			event = { "InsertEnter", "CmdlineEnter" },
 			-- optional: provides snippets for the snippet source
 			dependencies = {
-				"rafamadriz/friendly-snippets",
-				dependencies = { "L3MON4D3/LuaSnip", version = "v2.*" },
+				{ "rafamadriz/friendly-snippets", lazy = true },
+				{
+					"L3MON4D3/LuaSnip",
+					version = "v2.*",
+					config = function()
+						require("luasnip.loaders.from_vscode").lazy_load()
+					end,
+				},
 			},
 
 			-- use a release tag to download pre-built binaries
@@ -159,8 +206,7 @@ require("lazy").setup({
 		{
 			"catgoose/nvim-colorizer.lua",
 			event = "BufReadPre",
-			opts = { -- set to setup table
-			},
+			opts = { user_default_options = { tailwind = true } },
 		},
 		{
 			"nvim-treesitter/nvim-treesitter-context",
@@ -189,12 +235,72 @@ require("lazy").setup({
 			"stevearc/oil.nvim",
 			---@module 'oil'
 			---@type oil.SetupOpts
-			opts = {},
+			opts = { default_file_explorer = false },
 			-- Optional dependencies
 			dependencies = { { "nvim-mini/mini.icons", opts = {} } },
 			-- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
 			-- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
 			lazy = false,
+		},
+		{
+			"nvim-tree/nvim-tree.lua",
+			version = "*",
+			lazy = false,
+			dependencies = { "nvim-tree/nvim-web-devicons" },
+			config = function()
+				vim.g.loaded_netrw = 1
+				vim.g.loaded_netrwPlugin = 1
+				local api = require("nvim-tree.api")
+				local height_ratio, width_ratio = 0.8, 0.5
+				require("nvim-tree").setup({
+					disable_netrw = true,
+					hijack_netrw = true,
+					respect_buf_cwd = true,
+					sync_root_with_cwd = true,
+					renderer = {
+						highlight_git = "all",
+						icons = { show = { git = true }, git_placement = "signcolumn" },
+					},
+					update_focused_file = { enable = true, update_root = false },
+					view = {
+						relativenumber = true,
+						float = {
+							enable = true,
+							open_win_config = function()
+								local screen_w, screen_h = vim.o.columns, vim.o.lines - vim.o.cmdheight
+								local width, height = math.floor(screen_w * width_ratio), math.floor(screen_h * height_ratio)
+								return {
+									relative = "editor",
+									border = "rounded",
+									row = math.floor((screen_h - height) / 2),
+									col = math.floor((screen_w - width) / 2),
+									width = width,
+									height = height,
+								}
+							end,
+						},
+						width = function() return math.floor(vim.o.columns * width_ratio) end,
+					},
+				})
+				vim.keymap.set("n", "<leader>t", function()
+					if api.tree.is_visible() then
+						api.tree.close()
+					else
+						api.tree.open({ path = vim.fn.getcwd() })
+						api.tree.find_file({ open = false, focus = false })
+					end
+				end, { desc = "Toggle project tree" })
+			end,
+		},
+		{
+			"nickjvandyke/opencode.nvim",
+			config = function()
+				vim.g.opencode_opts = {}
+				vim.keymap.set({ "n", "x" }, "<C-a>", function() require("opencode").ask("@this: ") end, { desc = "Ask OpenCode" })
+				vim.keymap.set({ "n", "x" }, "<C-x>", function() require("opencode").select() end, { desc = "Select OpenCode" })
+				vim.keymap.set({ "n", "x" }, "go", function() return require("opencode").operator("@this") end, { expr = true, desc = "Send selection to OpenCode" })
+				vim.keymap.set("n", "goo", function() return require("opencode").operator("@this") .. "_" end, { expr = true, desc = "Send line to OpenCode" })
+			end,
 		},
 
 		-- NOTE: DAP, LINT, FORMAT clients
